@@ -1,3 +1,12 @@
 export default function DashboardPage() {
-  return <div>private - You need to bee logged in to view this</div>;
+  return (
+    <div style={{ backgroundImage: 'url("/")' }}>
+      <h1>Dashboard</h1>
+      <h1>Dashboard</h1>
+      <h1>Dashboard</h1>
+      <h1>Dashboard</h1>
+      <h1>Dashboard</h1>
+      <h1>Dashboard</h1>
+    </div>
+  );
 }

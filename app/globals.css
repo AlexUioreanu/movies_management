@@ -31,3 +31,17 @@ body {
     text-wrap: balance;
   }
 }
+
+/* App.css */
+.signInSignUpContainer {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url('/background.svg');
+  background-size: cover;
+  background-position: 65% 35%;
+  background-repeat: no-repeat;
+}
