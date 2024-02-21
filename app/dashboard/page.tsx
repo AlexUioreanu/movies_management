@@ -39,11 +39,11 @@ export default function DashboardPage() {
         height: "100vh",
         overflowX: "hidden",
         backgroundImage: "url('/backgrounddoodleextended.png')",
-        backgroundSize: "cover", // Cover the entire area
-        backgroundPosition: "center", // Center the background image
+        backgroundSize: "cover", 
+        backgroundPosition: "center", 
       }}
     >
-      {/* Header with search and profile icon */}
+    
       <div
         style={{
           display: "flex",
@@ -52,25 +52,11 @@ export default function DashboardPage() {
           padding: "1rem",
         }}
       >
-        {/* Profile Icon */}
-        <div style={{ flex: "1" }}>Profile Icon Here</div>
-        {/* Search Bar */}
-        <div style={{ flex: "1", textAlign: "center" }}>Search Bar Here</div>
-        {/* Dummy Placeholder */}
-        <div style={{ flex: "1" }}></div>
       </div>
 
-      {/* Featured Movie Section */}
       <div
         style={{ position: "relative", color: "white", textAlign: "center" }}
       >
-        {/* Featured Movie Image */}
-        <img
-          src="/path-to-featured-movie.jpg"
-          alt="Featured Movie"
-          style={{ width: "100%", height: "auto", display: "block" }}
-        />
-        {/* Featured Movie Details */}
         <div
           style={{
             position: "absolute",
@@ -85,7 +71,6 @@ export default function DashboardPage() {
 
       <div style={{ padding: "1rem", textAlign: "center" }}>
         {" "}
-        {/* Top Rated Movies Header */}
         <div
           className="px-10"
           style={{
@@ -99,7 +84,6 @@ export default function DashboardPage() {
         >
           Top Rated Movies
         </div>
-        {/* Movies Grid */}
         <div
           style={{
             display: "grid",

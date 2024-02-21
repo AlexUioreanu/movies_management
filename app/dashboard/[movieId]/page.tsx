@@ -18,7 +18,7 @@ export default function MovieDetails({
         console.log(movieDetails);
         setData(movieDetails);
       } catch (error) {
-        console.log(error); // Ensure this logs the expected data
+        console.log(error);
         console.error("Failed to fetch movie details movies:", error);
       }
     }
