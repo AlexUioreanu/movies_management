@@ -16,11 +16,15 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.16",
     "@vercel/postgres": "^0.7.2",
     "bcrypt": "^5.1.1",
+    "embla-carousel-autoplay": "^8.0.0-rc23",
     "next": "14.1.0",
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.8"
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.8",
+    "swiper": "^11.0.6"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

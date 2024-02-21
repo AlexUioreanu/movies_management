@@ -1,18 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import Dashboard from "./dashboard";
-import { getTopRatedMovies } from "@/utils";
+import { getTopRatedMovies, getTrendingMovies } from "@/utils";
 import { Result, Root } from "@/types";
 import { MovieCard } from "@/components/MovieCard";
-import { url } from "node:inspector";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function DashboardPage() {
-  const [data, setData] = useState<Result[] | undefined>();
+  const [topRatedMovies, setTopRatedMovies] = useState<Result[] | undefined>();
+  const [trendingMovies, setTrendingMovies] = useState<Result[] | undefined>();
+
   const router = useRouter();
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchTopRatedMovies() {
       try {
         const response1 = await getTopRatedMovies(1);
         const response2 = await getTopRatedMovies(2);
@@ -25,52 +26,45 @@ export default function DashboardPage() {
         ];
 
         console.log(allMovies);
-        setData(allMovies);
+        setTopRatedMovies(allMovies);
       } catch (error) {
         console.error("Failed to fetch trending movies:", error);
       }
     }
-    fetchData();
+    async function fetchTrendingMovies() {
+      try {
+        const response1 = await getTrendingMovies(1);
+        const response2 = await getTrendingMovies(2);
+        const response3 = await getTrendingMovies(3);
+
+        const allMovies: Result[] = [
+          ...response1.results,
+          ...response2.results,
+          ...response3.results,
+        ];
+
+        console.log(allMovies);
+        setTrendingMovies(allMovies);
+      } catch (error) {
+        console.error("Failed to fetch trending movies:", error);
+      }
+    }
+    fetchTopRatedMovies();
+    fetchTrendingMovies();
   }, []);
   return (
     <div
       style={{
-        maxWidth: "100vw",
-        height: "100vh",
-        overflowX: "hidden",
+        minHeight: "100vh",
+        width: "100vw",
         backgroundImage: "url('/backgrounddoodleextended.png')",
-        backgroundSize: "cover", 
-        backgroundPosition: "center", 
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
-    
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "1rem",
-        }}
-      >
-      </div>
-
-      <div
-        style={{ position: "relative", color: "white", textAlign: "center" }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          Featured Movie Details Here
-        </div>
-      </div>
-
       <div style={{ padding: "1rem", textAlign: "center" }}>
-        {" "}
+        
+        </div>
         <div
           className="px-10"
           style={{
@@ -92,14 +86,14 @@ export default function DashboardPage() {
             gap: "1rem",
           }}
         >
-          {data?.map((movie: Result) => (
+          {topRatedMovies?.map((movie: Result) => (
             <MovieCard
               key={movie.id}
               movie={movie}
               isMustWatch={movie.vote_average >= 7 ? true : false}
               isFavorite={true}
               onClick={() => {
-                router.push(`/${movie.id}`);
+                router.push(`/dashboard/${movie.id}`);
               }}
             />
           ))}

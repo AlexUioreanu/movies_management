@@ -15,8 +15,8 @@ export const MovieCard: React.FC<{
       <Image
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         layout="responsive"
-        width={150}
-        height={225}
+        width={250}
+        height={325}
         objectFit="cover"
         alt={""}
       />
