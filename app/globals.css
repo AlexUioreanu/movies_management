@@ -45,3 +45,16 @@ body {
   background-position: 65% 35%;
   background-repeat: no-repeat;
 }
+
+.movie-card {
+  position: relative;
+  width: 150px;
+  height: 225px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease; /* Animation duration and easing function */
+}
+
+.movie-card:hover {
+  transform: translateY(-10px); /* Move up along the Y-axis by 10px */
+}
