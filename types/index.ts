@@ -88,3 +88,42 @@ export interface SpokenLanguage {
   iso_639_1: string;
   name: string;
 }
+
+export interface PopularPeople {
+  page: number;
+  total_pages: number;
+  results: People[];
+  total_results: number;
+}
+
+export interface People {
+  gender: number;
+  known_for_department: string;
+  known_for: KnownForItem[];
+  popularity: number;
+  name: string;
+  profile_path: string;
+  id: number;
+  adult: boolean;
+}
+
+export interface KnownForItem {
+  overview: string;
+  original_language: string;
+  original_title: string;
+  video: boolean;
+  title: string;
+  genre_ids: number[];
+  poster_path: string;
+  backdrop_path: string;
+  media_type: string;
+  release_date: string;
+  vote_average?: number;
+  id: number;
+  adult: boolean;
+  vote_count: number;
+  first_air_date: string;
+  origin_country: string[];
+  original_name?: string;
+  name: string;
+}

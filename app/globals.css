@@ -52,9 +52,10 @@ body {
   height: 225px;
   border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.3s ease; /* Animation duration and easing function */
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 9px rgba(0, 0, 0, 0.7);
 }
 
 .movie-card:hover {
-  transform: translateY(-10px); /* Move up along the Y-axis by 10px */
+  transform: translateY(-10px);
 }
