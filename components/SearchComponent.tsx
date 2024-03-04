@@ -1,50 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import OutlinedTextField from "./OutlinedTextField";
 import { Result } from "@/types";
 import { getMoviesByName } from "@/utils";
 import MovieCard from "./MovieCard";
 import { useRouter } from "next/navigation";
+import CircularProgress from "@mui/material/CircularProgress";
+
+const DEBOUNCE_TIMEOUT = 500;
 
 const SearchComponent = () => {
   const [query, setQuery] = useState("");
-  const [filteredMovies, setFilteredMovies] = useState<Result[]>([]);
+  const [searchedMovies, setSearchedMovies] = useState<Result[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const debouncedQuery = useDebounce(query, DEBOUNCE_TIMEOUT);
 
   const router = useRouter();
 
-  var baseMovies: Result[] = [];
-  var initialThreeLetters: string = "";
-
   useEffect(() => {
-    if (query.length == 3) {
-      initialThreeLetters = query;
+    if (debouncedQuery.length >= 3) {
       setIsLoading(true);
       const fetchMovies = async () => {
-        const totalPages = 1;
-
+        const totalPages = 3;
+        var baseMovies: Result[] = [];
         for (let page = 1; page <= totalPages; page++) {
           const fetchedMovies = await getMoviesByName({
-            movieName: query,
+            movieName: debouncedQuery,
             page,
           });
           baseMovies.push(...fetchedMovies.results);
         }
 
-        setFilteredMovies(baseMovies);
+        setSearchedMovies(baseMovies);
         setIsLoading(false);
       };
       fetchMovies();
-    }
-
-    if (query) {
-      const filteredList = baseMovies.filter((movie) =>
-        movie.title?.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredMovies(filteredList);
     } else {
-      setFilteredMovies([]);
+      setSearchedMovies([]);
     }
-  }, [query]);
+  }, [debouncedQuery]);
 
   return (
     <div
@@ -85,12 +78,19 @@ const SearchComponent = () => {
           justifyContent: "center",
           flexWrap: "wrap",
           alignItems: "center",
+          backgroundColor: "black",
           gap: "1rem",
           paddingTop: "1rem",
+          overflowY: "scroll",
+          height: "600px",
+          width: "100%",
         }}
       >
-        {filteredMovies.length > 0 &&
-          filteredMovies.map((movie: Result) => (
+        {isLoading ? (
+          <CircularProgress color="secondary" className="py-20" />
+        ) : (
+          searchedMovies.length > 0 &&
+          searchedMovies.map((movie: Result) => (
             <MovieCard
               key={movie.id}
               movie={movie}
@@ -98,10 +98,22 @@ const SearchComponent = () => {
               isFavorite={true}
               onClick={() => router.push(`/dashboard/${movie.id}`)}
             />
-          ))}
+          ))
+        )}
       </div>
     </div>
   );
 };
+
+export function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(timeoutId);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 export default SearchComponent;

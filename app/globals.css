@@ -61,3 +61,18 @@ body {
 .movie-card:hover {
   transform: translateY(-10px);
 }
+
+.search-results-container.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.7s
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
