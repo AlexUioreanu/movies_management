@@ -32,8 +32,8 @@ export const SwiperMoviesComponent = ({
       </div>
       <Swiper
         spaceBetween={10}
-        slidesPerView={15}
-        initialSlide={0}
+        slidesPerView={12}
+        loop={true}
         style={{ padding: "1rem" }}
       >
         {movies?.map((movie: Result) => (

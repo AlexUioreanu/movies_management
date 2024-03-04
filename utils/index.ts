@@ -91,3 +91,22 @@ export async function getMovieById({
   console.log(data);
   return data;
 }
+
+export async function getMoviesByName({
+  movieName,
+  page,
+}: {
+  movieName: string;
+  page: number;
+}): Promise<Root> {
+  const url = `${BASE_URL}/search/movie?query=${movieName}&api_key=${APIKEY}&language=en-US&include_adult=true&page=${page}`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.log("error");
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  const data = await response.json();
+  console.log(data);
+  return data;
+}

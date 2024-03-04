@@ -1,6 +1,6 @@
 "use client";
 
-import BorderTextField from "@/components/BorderTextField";
+import OutlinedTextField from "@/components/OutlinedTextField";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -66,7 +66,7 @@ export default function Form() {
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-96 mt-10 ">
-        <BorderTextField
+        <OutlinedTextField
           name="email"
           label="Email"
           type="email"
@@ -74,7 +74,7 @@ export default function Form() {
           value={inputs.email}
           required
         />
-        <BorderTextField
+        <OutlinedTextField
           name="password"
           label="Password"
           type="password"

@@ -32,8 +32,8 @@ export const SwiperStarsComponent = ({
       </div>
       <Swiper
         spaceBetween={10}
-        slidesPerView={12}
-        initialSlide={0}
+        slidesPerView={9}
+        loop={true}
         style={{ padding: "1rem" }}
       >
         {stars?.map((star: People) => (
@@ -41,8 +41,8 @@ export const SwiperStarsComponent = ({
             <div
               className="wrapper p-16"
               style={{
-                height: "300px", // Increased height
-                width: "300px", // Increased width
+                height: "300px",
+                width: "300px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -52,13 +52,23 @@ export const SwiperStarsComponent = ({
               <Image
                 src={`https://image.tmdb.org/t/p/w500${star.profile_path}`}
                 layout="responsive"
-                width={250}
-                height={325}
+                width={300}
+                height={300}
                 objectFit="fill"
                 alt={""}
-                style={{ borderRadius: "50%" }}
+                style={{
+                  borderRadius: "50%",
+                  boxShadow: "0 4px 8px 0 rgba(0,0,0,0.7)",
+                }}
               />
-              <h1 style={{ color: "black" }}>{star.name}</h1>
+              <h1
+                style={{
+                  color: "black",
+                  paddingTop: "1rem",
+                }}
+              >
+                {star.name}
+              </h1>
             </div>
           </SwiperSlide>
         ))}

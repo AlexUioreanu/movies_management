@@ -51,6 +51,8 @@ body {
   width: 150px;
   height: 225px;
   border-radius: 10px;
+    display: inline-flex;
+      flex-direction: row;
   overflow: hidden;
   transition: transform 0.3s ease;
   box-shadow: 0 0 9px rgba(0, 0, 0, 0.7);

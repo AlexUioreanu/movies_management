@@ -17,6 +17,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { SwiperMoviesComponent } from "@/components/SwiperMoviesComponent";
 import { SwiperStarsComponent } from "@/components/SwiperStarsComponent";
+import OutlinedTextField from "@/components/OutlinedTextField";
+import SearchComponent from "@/components/SearchComponent";
 
 export default function DashboardPage() {
   const [trendingMovies, setTrendingMovies] = useState<Result[] | undefined>();
@@ -29,113 +31,61 @@ export default function DashboardPage() {
   const router = useRouter();
 
   useEffect(() => {
+    const totalPages = 6;
     async function fetchTrendingMovies() {
-      try {
-        const response1 = await getTrendingMovies(1);
-        const response2 = await getTrendingMovies(2);
-        const response3 = await getTrendingMovies(3);
-
-        const allMovies: Result[] = [
-          ...response1.results,
-          ...response2.results,
-          ...response3.results,
-        ];
-
-        console.log(allMovies);
-        setTrendingMovies(allMovies);
-      } catch (error) {
-        console.error("Failed to fetch trending movies:", error);
+      var baseMovies: Result[] = [];
+      for (let page = 1; page <= totalPages; page++) {
+        const fetchedMovies = await getTrendingMovies(page);
+        baseMovies.push(...fetchedMovies.results);
       }
+
+      console.log(baseMovies);
+      setTrendingMovies(baseMovies);
     }
     async function fetchStars() {
-      try {
-        const response1 = await getStars(1);
-        const response2 = await getStars(2);
-        const response3 = await getStars(3);
-
-        const allMovies: People[] = [
-          ...response1.results,
-          ...response2.results,
-          ...response3.results,
-        ];
-
-        console.log(allMovies);
-        setStars(allMovies);
-      } catch (error) {
-        console.error("Failed to fetch trending movies:", error);
+      var baseStars: People[] = [];
+      for (let page = 1; page <= totalPages; page++) {
+        const fetchStars = await getStars(page);
+        baseStars.push(...fetchStars.results);
       }
+      console.log(baseStars);
+      setStars(baseStars);
     }
     async function fetchUpcomingMovies() {
-      try {
-        const response1 = await getUpcomingMovies(1);
-        const response2 = await getUpcomingMovies(2);
-        const response3 = await getUpcomingMovies(3);
-
-        const allMovies: Result[] = [
-          ...response1.results,
-          ...response2.results,
-          ...response3.results,
-        ];
-
-        console.log(allMovies);
-        setUpcomingMovies(allMovies);
-      } catch (error) {
-        console.error("Failed to fetch upcoming movies:", error);
+      var baseMovies: Result[] = [];
+      for (let page = 1; page <= totalPages; page++) {
+        const fetchedMovies = await getUpcomingMovies(page);
+        baseMovies.push(...fetchedMovies.results);
       }
+      console.log(baseMovies);
+      setUpcomingMovies(baseMovies);
     }
     async function fetchTopRatedMovies() {
-      try {
-        const response1 = await getTopRatedMovies(1);
-        const response2 = await getTopRatedMovies(2);
-        const response3 = await getTopRatedMovies(3);
-
-        const allMovies: Result[] = [
-          ...response1.results,
-          ...response2.results,
-          ...response3.results,
-        ];
-
-        console.log(allMovies);
-        setTopRatedMovies(allMovies);
-      } catch (error) {
-        console.error("Failed to fetch trending movies:", error);
+      var baseMovies: Result[] = [];
+      for (let page = 1; page <= totalPages; page++) {
+        const fetchedMovies = await getTopRatedMovies(page);
+        baseMovies.push(...fetchedMovies.results);
       }
+      console.log(baseMovies);
+      setTopRatedMovies(baseMovies);
     }
     async function fetchPopularMovies() {
-      try {
-        const response1 = await getPopularMovies(1);
-        const response2 = await getPopularMovies(2);
-        const response3 = await getPopularMovies(3);
-
-        const allMovies: Result[] = [
-          ...response1.results,
-          ...response2.results,
-          ...response3.results,
-        ];
-
-        console.log(allMovies);
-        setPopularMovies(allMovies);
-      } catch (error) {
-        console.error("Failed to fetch trending movies:", error);
+      var baseMovies: Result[] = [];
+      for (let page = 1; page <= totalPages; page++) {
+        const fetchedMovies = await getPopularMovies(page);
+        baseMovies.push(...fetchedMovies.results);
       }
+      console.log(baseMovies);
+      setPopularMovies(baseMovies);
     }
     async function fetchAiringTvShows() {
-      try {
-        const response1 = await getAiringTvShows(1);
-        const response2 = await getAiringTvShows(2);
-        const response3 = await getAiringTvShows(3);
-
-        const allMovies: Result[] = [
-          ...response1.results,
-          ...response2.results,
-          ...response3.results,
-        ];
-
-        console.log(allMovies);
-        setAiringTvShows(allMovies);
-      } catch (error) {
-        console.error("Failed to fetch trending movies:", error);
+      var baseMovies: Result[] = [];
+      for (let page = 1; page <= totalPages; page++) {
+        const fetchedMovies = await getAiringTvShows(page);
+        baseMovies.push(...fetchedMovies.results);
       }
+      console.log(baseMovies);
+      setAiringTvShows(baseMovies);
     }
     fetchTrendingMovies();
     fetchStars();
@@ -159,8 +109,8 @@ export default function DashboardPage() {
           <Swiper
             spaceBetween={50}
             slidesPerView={3}
-            initialSlide={2}
             centeredSlides={true}
+            loop={true}
             autoplay={{
               delay: 3500,
               disableOnInteraction: false,
@@ -240,6 +190,8 @@ export default function DashboardPage() {
           movies={airingTvShows || []}
           title=" Airing TV Shows"
         />
+
+        <SearchComponent />
       </div>
     </div>
   );
