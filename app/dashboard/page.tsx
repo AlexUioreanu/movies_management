@@ -19,6 +19,7 @@ import { SwiperMoviesComponent } from "@/components/SwiperMoviesComponent";
 import { SwiperStarsComponent } from "@/components/SwiperStarsComponent";
 import OutlinedTextField from "@/components/OutlinedTextField";
 import SearchComponent from "@/components/SearchComponent";
+import { useSession } from "next-auth/react";
 
 export default function DashboardPage() {
   const [trendingMovies, setTrendingMovies] = useState<Result[] | undefined>();

@@ -14,21 +14,16 @@ export default function MovieDetailsPage({
     movieId: number;
   };
 }) {
-  const [movie, setMOvie] = useState<MovieDetails | undefined>();
+  const [movie, setMovie] = useState<MovieDetails | undefined>();
   console.log(params);
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const movieDetails = await getMovieById({
-          movieid: params.movieId,
-        });
-        console.log(movieDetails);
-        setMOvie(movieDetails);
-      } catch (error) {
-        console.log(error);
-        console.error("Failed to fetch movie details movies:", error);
-      }
+      const movieDetails = await getMovieById({
+        movieid: params.movieId,
+      });
+      console.log(movieDetails);
+      setMovie(movieDetails);
     }
     fetchData();
   }, [params.movieId]);
