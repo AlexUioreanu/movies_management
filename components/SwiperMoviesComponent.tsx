@@ -41,6 +41,7 @@ export const SwiperMoviesComponent = ({
         {movies?.map((movie: Result) => (
           <SwiperSlide key={movie.id}>
             <MovieCard
+              key={movie.id}
               movie={movie}
               isMustWatch={movie.vote_average >= 7 ? true : false}
               isFavorite={ids.includes(movie.id)}

@@ -1,6 +1,4 @@
 import { Root, MovieDetails, PopularPeople } from "@/types";
-import { sql } from "@vercel/postgres";
-import { getServerSession } from "next-auth/next";
 
 const APIKEY = "96d31308896f028f63b8801331250f03";
 const BASE_URL = "https://api.themoviedb.org/3";

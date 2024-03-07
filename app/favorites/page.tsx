@@ -1,29 +1,71 @@
 "use client";
+import MovieCard from "@/components/MovieCard";
+import { MovieDetails, Result } from "@/types";
+import { getMovieById } from "@/utils";
+import { useRouter } from "next/navigation";
+import router from "next/router";
 import React, { useEffect, useState } from "react";
 
 const FavoritesPage = () => {
-  const [favoriteMovies, setfavoriteMovies] = useState([]);
+  const router = useRouter();
+
+  const [favoriteMovies, setfavoriteMovies] = useState<MovieDetails[]>([]);
+  const [favoriteMoviesId, setFavoriteMoviesId] = useState<number[]>([]);
+
+  const fetchFavoriteIds = async () => {
+    try {
+      const response = await fetch(`/api/auth/favorites`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setFavoriteMoviesId([]);
+      setfavoriteMovies([]);
+
+      if (response.ok) {
+        const data = await response.json();
+        setFavoriteMoviesId(data.movieIds);
+        console.log("Fetched favorite ids successfully");
+      } else {
+        console.error("Error getting the ids", await response.json());
+      }
+    } catch (error) {
+      console.error("Error getting the ids:", error);
+    }
+  };
 
   useEffect(() => {
-    async function fetchFavoriteIds() {
-      try {
-        const response = await fetch(`/api/auth/favorites`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+    fetchFavoriteIds();
+  }, []);
 
-        if (response.ok) {
-          console.log("Fetched favorite ids successfully");
-        } else {
-          console.error("Error getting the ids", await response.json());
+  useEffect(() => {
+    async function fetchMovies() {
+      const fetchedMovies: MovieDetails[] = [];
+
+      for (const movieId of favoriteMoviesId) {
+        try {
+          const movieDetails = await getMovieById({ movieid: movieId });
+
+          fetchedMovies.push(movieDetails);
+        } catch (error) {
+          console.log("error");
+          console.error(
+            `Error fetching movie details for ID ${movieId}:`,
+            error
+          );
         }
-      } catch (error) {
-        console.error("Error getting the ids:", error);
       }
+
+      setfavoriteMovies(fetchedMovies);
+      console.log(fetchMovies);
     }
-  });
+
+    if (favoriteMoviesId.length > 0) {
+      fetchMovies();
+    }
+  }, [favoriteMoviesId]);
 
   return (
     <div
@@ -52,11 +94,24 @@ const FavoritesPage = () => {
           position: "relative",
           flexDirection: "row",
           justifyContent: "center",
+          gap: "1rem",
           textAlign: "center",
           boxShadow: "0 0 16px 16px rgba(0,0,0,0.3)",
         }}
       >
-        fadsfsadfdsdfs fsdafads sdfasdfdsa
+        {favoriteMovies?.map((movie: MovieDetails) => (
+          <MovieCard
+            key={movie.id}
+            movie={movie as unknown as Result}
+            isMustWatch={movie.vote_average >= 7 ? true : false}
+            isFavorite={favoriteMoviesId.includes(movie.id)}
+            onFavoriteClick={() => fetchFavoriteIds()}
+            onClick={() => {
+              const isFavorite = favoriteMoviesId.includes(movie.id);
+              router.push(`/dashboard/${movie.id}?isFavorite=${isFavorite}`);
+            }}
+          />
+        ))}
       </div>
     </div>
   );

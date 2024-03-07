@@ -7,8 +7,15 @@ export const MovieCard: React.FC<{
   movie: Result;
   isMustWatch: boolean;
   isFavorite: boolean;
+  onFavoriteClick?: () => void;
   onClick: () => void;
-}> = ({ movie, isMustWatch, isFavorite, onClick }) => {
+}> = ({
+  movie,
+  isMustWatch,
+  isFavorite,
+  onFavoriteClick = () => {},
+  onClick,
+}) => {
   const [isFavorites, setIsFavorites] = useState<boolean>(isFavorite);
 
   useEffect(() => {
@@ -30,6 +37,7 @@ export const MovieCard: React.FC<{
 
       if (response.ok) {
         setIsFavorites(!isFavorites);
+        onFavoriteClick();
         console.log("Favorite updated successfully");
       } else {
         console.error("Error updating favorite:", await response.json());
