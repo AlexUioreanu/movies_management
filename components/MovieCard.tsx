@@ -1,5 +1,5 @@
 import { Result } from "@/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 
@@ -9,21 +9,20 @@ export const MovieCard: React.FC<{
   isFavorite: boolean;
   onClick: () => void;
 }> = ({ movie, isMustWatch, isFavorite, onClick }) => {
-  const [isFavorites, setIsFavorites] = useState<boolean>(false);
+  const [isFavorites, setIsFavorites] = useState<boolean>(isFavorite);
 
-  // const { data: session } = useSession();
+  useEffect(() => {
+    setIsFavorites(isFavorite);
+  }, [isFavorite]);
 
   const handleFavoriteClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     const movieId = movie.id;
-    const moviePosterPath = movie.poster_path;
-    const movieVoteAverage = movie.vote_average;
-    const userEmail = "";
 
     try {
       const response = await fetch(`/api/auth//favorites`, {
         method: isFavorites ? "DELETE" : "PUT",
-        body: JSON.stringify({ movieId, moviePosterPath, movieVoteAverage }),
+        body: JSON.stringify({ movieId }),
         headers: {
           "Content-Type": "application/json",
         },

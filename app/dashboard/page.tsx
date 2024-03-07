@@ -17,9 +17,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { SwiperMoviesComponent } from "@/components/SwiperMoviesComponent";
 import { SwiperStarsComponent } from "@/components/SwiperStarsComponent";
-import OutlinedTextField from "@/components/OutlinedTextField";
 import SearchComponent from "@/components/SearchComponent";
-import { useSession } from "next-auth/react";
 
 export default function DashboardPage() {
   const [trendingMovies, setTrendingMovies] = useState<Result[] | undefined>();
@@ -28,6 +26,8 @@ export default function DashboardPage() {
   const [popularMovies, setPopularMovies] = useState<Result[] | undefined>();
   const [airingTvShows, setAiringTvShows] = useState<Result[] | undefined>();
   const [stars, setStars] = useState<People[] | undefined>();
+
+  const [favoriteMoviesId, setFavoriteMoviesId] = useState<number[]>([]);
 
   const router = useRouter();
 
@@ -88,6 +88,33 @@ export default function DashboardPage() {
       console.log(baseMovies);
       setAiringTvShows(baseMovies);
     }
+    async function getFavoriteMoviesId() {
+      try {
+        const response = await fetch(`/api/auth/favorites`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          console.log(response);
+
+          const data = await response.json();
+          console.log(data);
+          setFavoriteMoviesId(data.movieIds);
+          console.log(favoriteMoviesId);
+        } else {
+          console.log("failed to fetch favorite movies IDs");
+          console.error("Failed to fetch favorite movies IDs");
+        }
+      } catch (error) {
+        console.error("Error fetching favorite movies IDs:", error);
+      }
+    }
+
+    getFavoriteMoviesId();
+
     fetchTrendingMovies();
     fetchStars();
     fetchUpcomingMovies();
@@ -95,6 +122,7 @@ export default function DashboardPage() {
     fetchPopularMovies();
     fetchAiringTvShows();
   }, []);
+
   return (
     <div
       style={{
@@ -175,23 +203,23 @@ export default function DashboardPage() {
         <SwiperMoviesComponent
           movies={upcomingMovies || []}
           title=" Upcoming Movies"
+          ids={favoriteMoviesId}
         />
-
         <SwiperMoviesComponent
           movies={topRatedMovies || []}
           title=" Top Rated Movies"
+          ids={favoriteMoviesId}
         />
-
         <SwiperMoviesComponent
           movies={popularMovies || []}
           title=" Popular Movies"
+          ids={favoriteMoviesId}
         />
-
         <SwiperMoviesComponent
           movies={airingTvShows || []}
           title=" Airing TV Shows"
+          ids={favoriteMoviesId}
         />
-
         <SearchComponent />
       </div>
     </div>

@@ -15,6 +15,9 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
+      <link rel="shortcut icon" href="/logo.svg" />
+      <link rel="icon" sizes="32x32" href="/logo.svg" />
+      <link rel="icon" sizes="16x16" href="/logo.svg" />
       <body className={inter.className}>
         <nav>
           {!!session && <Logout />}

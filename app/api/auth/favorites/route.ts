@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 import { getServerSession } from "next-auth";
-import { Result } from "@/types";
-import { useSession } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handleError = (error: any, message: string) => {
@@ -10,20 +8,28 @@ const handleError = (error: any, message: string) => {
   return NextResponse.json({ message }, { status: 500 });
 };
 
-export async function PUT(req: Request, res: NextApiResponse) {
-  const { movieId, moviePosterPath, movieVoteAverage } = await req.json();
+export async function PUT(req: Request) {
+  const { movieId } = await req.json();
+  const session = await getServerSession();
+  const userEmail = session?.user?.email;
 
   try {
-    const updateResponse = await sql`
-      UPDATE users
-      SET favoriteMovies = array_append(favoriteMovies, ${movieId})
-      WHERE email = ${"alex.uio@gmail.com"};
+    const existingFavorite = await sql`
+      SELECT * FROM user_favorites
+      WHERE user_email = ${userEmail} AND movie_id = ${movieId}
     `;
 
-    const updateResponse2 = await sql`
-        INSERT INTO movie 
-        VALUES (${movieId}, ${movieVoteAverage}, ${moviePosterPath});
-      `;
+    if (existingFavorite.rows.length > 0) {
+      return NextResponse.json(
+        { message: "Favorite already exist's " },
+        { status: 400 }
+      );
+    }
+
+    const updateResponse = await sql`
+      INSERT INTO user_favorites (user_email, movie_id)
+      VALUES (${userEmail},${movieId})
+    `;
 
     if (updateResponse.rowCount > 0) {
       return NextResponse.json({ message: "Favorite added successfully" });
@@ -39,15 +45,13 @@ export async function PUT(req: Request, res: NextApiResponse) {
 }
 
 export async function DELETE(request: Request) {
-  // const session = await getServerSession(request);
   const { movieId } = await request.json();
-  console.log(movieId);
+  const session = await getServerSession();
+  const userEmail = session?.user?.email;
 
   try {
     const updateResponse = await sql`
-      UPDATE users
-      SET favoriteMovies = array_remove(favoriteMovies, ${movieId})
-      WHERE email = ${"alex.uio@gmail.com"};
+     DELETE FROM user_favorites WHERE user_email = ${userEmail} AND movie_id = ${movieId} ;
     `;
 
     if (updateResponse.rowCount > 0) {
@@ -63,17 +67,38 @@ export async function DELETE(request: Request) {
   }
 }
 
-export async function GET() {
-  // const session = await getServerSession(request);
-  // const { movieId } = await request.json();
-  // console.log(movieId);
-
+export const GET = async (req: Request, res: Response) => {
   try {
-    const updateResponse = await sql`
-      SELECT favoriteMovies from users
-      WHERE email = ${"alex.uio@gmail.com"};
+    const session = await getServerSession();
+
+    const userEmail = session?.user?.email;
+    const result = await sql`
+      SELECT movie_id FROM user_favorites WHERE user_email = ${userEmail}"}
     `;
+
+    const movieIds = result.rows.map((row) => row.movie_id);
+
+    if (movieIds.length > 0) {
+      return NextResponse.json(
+        {
+          message: "Favorite list success get",
+          movieIds,
+        },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        {
+          message: "Error getting favorite list",
+          data: movieIds,
+        },
+        { status: 404 }
+      );
+    }
   } catch (error) {
-    return handleError(error, "Error getting favorite movies list");
+    console.error("Error getting favorite movies list:", error);
+    return NextResponse.json({
+      message: "Error getting favorite movies listsss",
+    });
   }
-}
+};

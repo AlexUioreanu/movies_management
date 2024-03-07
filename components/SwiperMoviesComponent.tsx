@@ -10,9 +10,11 @@ import { useRouter } from "next/navigation";
 export const SwiperMoviesComponent = ({
   title,
   movies,
+  ids = [],
 }: {
   title: string;
   movies: Result[];
+  ids: number[];
 }) => {
   const router = useRouter();
   return (
@@ -41,8 +43,11 @@ export const SwiperMoviesComponent = ({
             <MovieCard
               movie={movie}
               isMustWatch={movie.vote_average >= 7 ? true : false}
-              isFavorite={true}
-              onClick={() => router.push(`/dashboard/${movie.id}`)}
+              isFavorite={ids.includes(movie.id)}
+              onClick={() => {
+                const isFavorite = ids.includes(movie.id);
+                router.push(`/dashboard/${movie.id}?isFavorite=${isFavorite}`);
+              }}
             />
           </SwiperSlide>
         ))}
