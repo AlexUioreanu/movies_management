@@ -1,6 +1,30 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 
 const FavoritesPage = () => {
+  const [favoriteMovies, setfavoriteMovies] = useState([]);
+
+  useEffect(() => {
+    async function fetchFavoriteIds() {
+      try {
+        const response = await fetch(`/api/auth/favorites`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          console.log("Fetched favorite ids successfully");
+        } else {
+          console.error("Error getting the ids", await response.json());
+        }
+      } catch (error) {
+        console.error("Error getting the ids:", error);
+      }
+    }
+  });
+
   return (
     <div
       style={{

@@ -72,10 +72,10 @@ export const GET = async (req: Request, res: Response) => {
     const session = await getServerSession();
 
     const userEmail = session?.user?.email;
-    const result = await sql`
-      SELECT movie_id FROM user_favorites WHERE user_email = ${userEmail}"}
-    `;
 
+    const result = await sql`
+      SELECT movie_id FROM user_favorites WHERE user_email = ${userEmail}
+    `;
     const movieIds = result.rows.map((row) => row.movie_id);
 
     if (movieIds.length > 0) {

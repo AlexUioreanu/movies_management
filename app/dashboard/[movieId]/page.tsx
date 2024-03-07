@@ -16,7 +16,7 @@ export default function MovieDetailsPage({ params }: any) {
     const movieId = params.movieId;
 
     try {
-      const response = await fetch(`/api/auth//favorites`, {
+      const response = await fetch(`/api/auth/favorites`, {
         method: isFavorite ? "DELETE" : "PUT",
         body: JSON.stringify({ movieId }),
         headers: {
