@@ -19,8 +19,23 @@ export default async function RootLayout({
       <link rel="icon" sizes="32x32" href="/logo.svg" />
       <link rel="icon" sizes="16x16" href="/logo.svg" />
       <body className={inter.className}>
-        <nav>
-          {!!session && <Logout />}
+        <nav
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+            backgroundColor: "#000000",
+            color: "white",
+          }}
+        >
+          {!!session && (
+            <div style={{ display: "flex", gap: "6rem" }}>
+              <Logout />
+              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/favorites">Favorites</Link>
+            </div>
+          )}
           {!session && <Link href="/login">Login</Link>}
         </nav>
         {children}
