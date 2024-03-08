@@ -31,6 +31,31 @@ export default function DashboardPage() {
 
   const router = useRouter();
 
+  const getFavoriteMoviesId = async () => {
+    try {
+      const response = await fetch(`/api/auth/favorites`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        console.log(response);
+
+        const data = await response.json();
+        console.log(data);
+        setFavoriteMoviesId(data.movieIds);
+        console.log(favoriteMoviesId);
+      } else {
+        console.log("failed to fetch favorite movies IDs");
+        console.error("Failed to fetch favorite movies IDs");
+      }
+    } catch (error) {
+      console.error("Error fetching favorite movies IDs:", error);
+    }
+  };
+
   useEffect(() => {
     const totalPages = 6;
     async function fetchTrendingMovies() {
@@ -87,30 +112,6 @@ export default function DashboardPage() {
       }
       console.log(baseMovies);
       setAiringTvShows(baseMovies);
-    }
-    async function getFavoriteMoviesId() {
-      try {
-        const response = await fetch(`/api/auth/favorites`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (response.ok) {
-          console.log(response);
-
-          const data = await response.json();
-          console.log(data);
-          setFavoriteMoviesId(data.movieIds);
-          console.log(favoriteMoviesId);
-        } else {
-          console.log("failed to fetch favorite movies IDs");
-          console.error("Failed to fetch favorite movies IDs");
-        }
-      } catch (error) {
-        console.error("Error fetching favorite movies IDs:", error);
-      }
     }
 
     getFavoriteMoviesId();
@@ -220,7 +221,10 @@ export default function DashboardPage() {
           title=" Airing TV Shows"
           ids={favoriteMoviesId}
         />
-        <SearchComponent />
+        <SearchComponent
+          onFavoriteClick={() => getFavoriteMoviesId()}
+          ids={favoriteMoviesId}
+        />
       </div>
     </div>
   );

@@ -8,7 +8,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 const DEBOUNCE_TIMEOUT = 500;
 
-const SearchComponent = () => {
+const SearchComponent = ({
+  ids = [],
+  onFavoriteClick,
+}: {
+  ids: number[];
+  onFavoriteClick: () => void;
+}) => {
   const [query, setQuery] = useState("");
   const [searchedMovies, setSearchedMovies] = useState<Result[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -94,8 +100,11 @@ const SearchComponent = () => {
             <MovieCard
               key={movie.id}
               movie={movie}
+              onFavoriteClick={() => {
+                onFavoriteClick();
+              }}
               isMustWatch={movie.vote_average >= 7 ? true : false}
-              isFavorite={true}
+              isFavorite={ids.includes(movie.id)}
               onClick={() => router.push(`/dashboard/${movie.id}`)}
             />
           ))

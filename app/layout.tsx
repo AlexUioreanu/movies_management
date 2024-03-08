@@ -25,7 +25,7 @@ export default async function RootLayout({
             alignItems: "center",
             justifyContent: "center",
             padding: "1rem",
-            backgroundColor: "#000000",
+            backgroundColor: "red",
             color: "white",
           }}
         >

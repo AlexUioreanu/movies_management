@@ -33,8 +33,39 @@ export const SwiperStarsComponent = ({
       <Swiper
         spaceBetween={10}
         slidesPerView={9}
+        centeredSlides={true}
         loop={true}
         style={{ padding: "1rem" }}
+        breakpoints={{
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          480: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          640: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          768: {
+            slidesPerView: 5,
+            spaceBetween: 50,
+          },
+          1024: {
+            slidesPerView: 8,
+            spaceBetween: 60,
+          },
+          1400: {
+            slidesPerView: 10,
+            spaceBetween: 70,
+          },
+          1536: {
+            slidesPerView: 13,
+            spaceBetween: 80,
+          },
+        }}
       >
         {stars?.map((star: People) => (
           <SwiperSlide key={star.id}>

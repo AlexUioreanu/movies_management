@@ -35,8 +35,39 @@ export const SwiperMoviesComponent = ({
       <Swiper
         spaceBetween={10}
         slidesPerView={12}
+        centeredSlides={true}
         loop={true}
         style={{ padding: "1rem" }}
+        breakpoints={{
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          480: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          640: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          768: {
+            slidesPerView: 5,
+            spaceBetween: 50,
+          },
+          1024: {
+            slidesPerView: 6,
+            spaceBetween: 60,
+          },
+          1400: {
+            slidesPerView: 7,
+            spaceBetween: 70,
+          },
+          1536: {
+            slidesPerView: 14,
+            spaceBetween: 80,
+          },
+        }}
       >
         {movies?.map((movie: Result) => (
           <SwiperSlide key={movie.id}>
