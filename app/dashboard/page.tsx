@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getAiringTvShows,
   getPopularMovies,
@@ -31,7 +31,7 @@ export default function DashboardPage() {
 
   const router = useRouter();
 
-  const getFavoriteMoviesId = useCallback(async () => {
+  const getFavoriteMoviesId = async () => {
     try {
       const response = await fetch(`/api/auth/favorites`, {
         method: "GET",
@@ -54,7 +54,7 @@ export default function DashboardPage() {
     } catch (error) {
       console.error("Error fetching favorite movies IDs:", error);
     }
-  }, []);
+  };
 
   useEffect(() => {
     const totalPages = 6;
