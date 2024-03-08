@@ -33,7 +33,7 @@ export default function Form() {
       redirect: false,
     });
     console.log(`login response=${response}`);
-    if (!response?.error) {
+    if (response?.ok) {
       router.push("/dashboard");
       router.refresh();
     }
