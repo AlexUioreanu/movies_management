@@ -23,18 +23,31 @@ export default async function RootLayout({
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-between",
             padding: "1rem",
+            borderBottom: "8px solid orange",
             backgroundColor: "red",
             color: "white",
           }}
         >
           {!!session && (
-            <div style={{ display: "flex", gap: "6rem" }}>
-              <Logout />
-              <Link href="/dashboard">Dashboard</Link>
-              <Link href="/favorites">Favorites</Link>
-            </div>
+            <>
+              <div style={{ flex: 1 }}>
+                <Logout />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flex: 1,
+                  gap: "6rem",
+                }}
+              >
+                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/favorites">Favorites</Link>
+              </div>
+              <div style={{ flex: 1 }} />{" "}
+            </>
           )}
           {!session && <Link href="/login">Login</Link>}
         </nav>
