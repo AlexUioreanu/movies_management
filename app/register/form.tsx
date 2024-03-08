@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Image from "next/image";
+import { redirect, useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
 export default function Form() {
@@ -12,6 +13,8 @@ export default function Form() {
     email: "",
     password: "",
   });
+
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setinputs((prevState) => ({
@@ -30,6 +33,10 @@ export default function Form() {
         name: inputs.name,
       }),
     });
+    if (response.ok) {
+      console.log("Registered successfully");
+      router.push("/login");
+    }
     console.log({ response });
   };
   return (
