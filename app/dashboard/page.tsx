@@ -149,6 +149,36 @@ export default function DashboardPage() {
           modules={[Autoplay, Pagination]}
           pagination={{ clickable: true, dynamicBullets: true }}
           style={{ height: "525px" }}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            480: {
+              slidesPerView: 1,
+              spaceBetween: 30,
+            },
+            640: {
+              slidesPerView: 1,
+              spaceBetween: 40,
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 50,
+            },
+            1024: {
+              slidesPerView: 2,
+              spaceBetween: 60,
+            },
+            1400: {
+              slidesPerView: 3,
+              spaceBetween: 70,
+            },
+            1536: {
+              slidesPerView: 3,
+              spaceBetween: 80,
+            },
+          }}
         >
           {trendingMovies?.map((movie) => (
             <SwiperSlide key={movie.id}>
