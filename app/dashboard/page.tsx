@@ -20,6 +20,8 @@ import { SwiperStarsComponent } from "@/components/SwiperStarsComponent";
 import SearchComponent from "@/components/SearchComponent";
 
 export default function DashboardPage() {
+  const router = useRouter();
+
   const [trendingMovies, setTrendingMovies] = useState<Result[] | undefined>();
   const [upcomingMovies, setUpcomingMovies] = useState<Result[] | undefined>();
   const [topRatedMovies, setTopRatedMovies] = useState<Result[] | undefined>();
@@ -28,8 +30,6 @@ export default function DashboardPage() {
   const [stars, setStars] = useState<People[] | undefined>();
 
   const [favoriteMoviesId, setFavoriteMoviesId] = useState<number[]>([]);
-
-  const router = useRouter();
 
   const getFavoriteMoviesId = async () => {
     try {

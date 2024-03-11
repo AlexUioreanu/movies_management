@@ -38,9 +38,14 @@ const handler = NextAuth({
               id: user.id,
               email: user.email,
             };
+          } else {
+            console.error(`Password check failed for user ${user.email}`);
+            return null;
           }
         } catch (e) {
           console.log({ e });
+          console.error("Error during authorization:", e);
+          return null;
         }
 
         return null;

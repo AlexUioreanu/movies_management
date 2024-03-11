@@ -42,8 +42,8 @@ body {
   flex-direction: column;
   background-image: url('/background.svg');
   background-size: cover;
-  background-position:  center;
-  background-repeat: no-repeat;
+  background-position: 62% 38%;
+  background-size: 120%;
 }
 
 .movie-card {
@@ -51,8 +51,8 @@ body {
   width: 150px;
   height: 225px;
   border-radius: 10px;
-    display: inline-flex;
-      flex-direction: row;
+  display: inline-flex;
+  flex-direction: row;
   overflow: hidden;
   transition: transform 0.3s ease;
   box-shadow: 0 0 9px rgba(0, 0, 0, 0.7);
