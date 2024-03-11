@@ -110,3 +110,24 @@ export async function getMoviesByName({
   console.log(data);
   return data;
 }
+
+export const whiteButtonOutlineStyles = {
+  "& label.Mui-focused": {
+    color: "white",
+  },
+  "& label": {
+    color: "white",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "white",
+    },
+    "&:hover fieldset": {
+      borderColor: "white",
+    },
+    "& fieldset": {
+      borderColor: "white",
+    },
+    color: "white",
+  },
+};

@@ -1,5 +1,6 @@
 "use client";
 import OutlinedTextField from "@/components/OutlinedTextField";
+import { whiteButtonOutlineStyles } from "@/utils";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
@@ -73,6 +74,7 @@ export default function Form() {
           onChange={handleChange}
           value={inputs.name}
           required
+          sx={whiteButtonOutlineStyles}
         />
         <OutlinedTextField
           name="email"
@@ -81,6 +83,7 @@ export default function Form() {
           onChange={handleChange}
           value={inputs.email}
           required
+          sx={whiteButtonOutlineStyles}
         />
         <OutlinedTextField
           name="password"
@@ -89,6 +92,7 @@ export default function Form() {
           onChange={handleChange}
           value={inputs.password}
           required
+          sx={whiteButtonOutlineStyles}
         />
         <button
           type="submit"

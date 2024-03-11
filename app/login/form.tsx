@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { FormEvent, useState } from "react";
 import Link from "@mui/material/Link";
+import { whiteButtonOutlineStyles } from "@/utils";
 
 export default function Form() {
   const router = useRouter();
@@ -74,6 +75,7 @@ export default function Form() {
           onChange={handleChange}
           value={inputs.email}
           required
+          sx={whiteButtonOutlineStyles}
         />
         <OutlinedTextField
           name="password"
@@ -82,6 +84,7 @@ export default function Form() {
           onChange={handleChange}
           value={inputs.password}
           required
+          sx={whiteButtonOutlineStyles}
         />
         <button
           type="submit"
