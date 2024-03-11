@@ -1,11 +1,13 @@
 import { getServerSession } from "next-auth";
 import Form from "./form";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default async function RegisterPage() {
   const session = await getServerSession();
+  const router = useRouter();
+
   if (session) {
-    redirect("/dashboard");
+    router.push("/dashboard");
   }
   return <Form />;
 }
