@@ -8,6 +8,8 @@ import React, { FormEvent, useState } from "react";
 import Link from "@mui/material/Link";
 
 export default function Form() {
+  const router = useRouter();
+
   const [inputs, setinputs] = useState({
     name: "",
     email: "",
@@ -20,8 +22,6 @@ export default function Form() {
       [e.target.name]: e.target.value,
     }));
   };
-
-  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

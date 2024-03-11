@@ -42,7 +42,7 @@ body {
   flex-direction: column;
   background-image: url('/background.svg');
   background-size: cover;
-  background-position: 65% 35%;
+  background-position:  center;
   background-repeat: no-repeat;
 }
 

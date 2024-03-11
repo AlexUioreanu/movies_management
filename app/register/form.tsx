@@ -8,13 +8,13 @@ import { redirect, useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
 export default function Form() {
+  const router = useRouter();
+
   const [inputs, setinputs] = useState({
     name: "",
     email: "",
     password: "",
   });
-
-  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setinputs((prevState) => ({
