@@ -3,12 +3,10 @@ import Form from "./form";
 import { redirect, useRouter } from "next/navigation";
 
 export default async function LoginPage() {
-  // const session = await getServerSession();
+  const session = await getServerSession();
 
-  // if (session) {
-  //   console.log(session);
-
-  //   redirect("/dashboard");
-  // }
+  if (session) {
+    redirect("/dashboard");
+  }
   return <Form />;
 }
