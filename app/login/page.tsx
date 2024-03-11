@@ -6,7 +6,7 @@ export default async function LoginPage() {
   const session = await getServerSession();
   const router = useRouter();
   if (session) {
-    router.push("/dashboard");
+    // router.push("/dashboard");
   }
   return <Form />;
 }

@@ -7,7 +7,7 @@ export default async function RegisterPage() {
   const router = useRouter();
 
   if (session) {
-    router.push("/dashboard");
+    // router.push("/dashboard");
   }
   return <Form />;
 }
