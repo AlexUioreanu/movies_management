@@ -86,7 +86,7 @@ const SearchComponent = ({
           alignItems: "center",
           backgroundColor: "black",
           gap: "1rem",
-          paddingTop: "1rem",
+          marginTop: "1rem",
           overflowY: "scroll",
           height: "600px",
           width: "100%",

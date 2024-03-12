@@ -108,6 +108,7 @@ export default function Form() {
             textDecoration: "none",
             color: "#056bf0",
             fontWeight: "normal",
+            marginBottom: "50px",
           }}
         >
           You don't have an account? SignUp
