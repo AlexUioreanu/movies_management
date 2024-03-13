@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import React from "react";
 import Image from "next/image";
 
-export default function MovieDetailsPage({ params }: any) {
+export default function MovieDetailsPage({ params, searchParams }: any) {
   const [movie, setMovie] = useState<MovieDetails | undefined>();
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-
-  console.log(params);
+  const [isFavorite, setIsFavorite] = useState<boolean>(
+    searchParams.isFavorite === "true"
+  );
 
   const handleFavoriteClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
