@@ -1,6 +1,6 @@
 "use client";
 
-import OutlinedTextField from "@/components/OutlinedTextField";
+import OutlinedTextField from "@/app/components/OutlinedTextField";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";

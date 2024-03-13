@@ -1,5 +1,5 @@
 "use client";
-import MovieCard from "@/components/MovieCard";
+import MovieCard from "@/app/components/MovieCard";
 import { MovieDetails, Result } from "@/types";
 import { getMovieById } from "@/utils";
 import { useRouter } from "next/navigation";

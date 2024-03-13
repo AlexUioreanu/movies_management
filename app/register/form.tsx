@@ -1,5 +1,5 @@
 "use client";
-import OutlinedTextField from "@/components/OutlinedTextField";
+import OutlinedTextField from "@/app/components/OutlinedTextField";
 import { whiteButtonOutlineStyles } from "@/utils";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";

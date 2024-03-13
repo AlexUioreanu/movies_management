@@ -15,9 +15,9 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 import "swiper/css";
 import "swiper/css/pagination";
-import { SwiperMoviesComponent } from "@/components/SwiperMoviesComponent";
-import { SwiperStarsComponent } from "@/components/SwiperStarsComponent";
-import SearchComponent from "@/components/SearchComponent";
+import { SwiperMoviesComponent } from "@/app/components/SwiperMoviesComponent";
+import { SwiperStarsComponent } from "@/app/components/SwiperStarsComponent";
+import SearchComponent from "@/app/components/SearchComponent";
 
 export default function DashboardPage() {
   const router = useRouter();
