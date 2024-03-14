@@ -29,10 +29,10 @@ const FavoritesPage = () => {
         setFavoriteMoviesId(data.movieIds);
         console.log("Fetched favorite ids successfully");
       } else {
-        console.error("Error getting the ids", await response.json());
+        throw Error("Error getting the ids");
       }
     } catch (error) {
-      console.error("Error getting the ids:", error);
+      throw Error("Error getting the ids");
     }
   };
 
@@ -50,11 +50,7 @@ const FavoritesPage = () => {
 
           fetchedMovies.push(movieDetails);
         } catch (error) {
-          console.log("error");
-          console.error(
-            `Error fetching movie details for ID ${movieId}:`,
-            error
-          );
+          throw Error(`Error getting the ids ${error}`);
         }
       }
 

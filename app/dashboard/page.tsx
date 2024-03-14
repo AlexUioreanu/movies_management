@@ -46,11 +46,10 @@ export default function DashboardPage() {
         setFavoriteMoviesId(data.movieIds);
         console.log(favoriteMoviesId);
       } else {
-        console.log("failed to fetch favorite movies IDs");
-        console.error("Failed to fetch favorite movies IDs");
+        throw Error(`Failed to fetch favorite movies IDs`);
       }
     } catch (error) {
-      console.error("Error fetching favorite movies IDs:", error);
+      throw Error(`Error fetching favorite movies ID ${error}`);
     }
   };
 

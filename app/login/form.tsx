@@ -38,6 +38,8 @@ export default function Form() {
       console.log(`login response=${response}`);
       router.push("/dashboard");
       router.refresh();
+    } else {
+      throw Error("failed to log in");
     }
   };
 

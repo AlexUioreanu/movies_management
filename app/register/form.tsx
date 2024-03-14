@@ -37,8 +37,9 @@ export default function Form() {
     if (response.ok) {
       console.log("Registered successfully");
       router.push("/login");
+    } else {
+      throw Error("failed to register");
     }
-    console.log({ response });
   };
   return (
     <div className="signInSignUpContainer">

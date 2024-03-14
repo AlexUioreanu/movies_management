@@ -32,10 +32,10 @@ export default function MovieDetailsWithSuspense({
         setIsFavorite(!isFavorite);
         console.log("Favorite updated successfully");
       } else {
-        console.error("Error updating favorite:", await response.json());
+        throw Error(`Error updating favorite`);
       }
     } catch (error) {
-      console.error("Error updating favorite:", error);
+      throw Error(`Error updating favorite ${error}`);
     }
   };
 
