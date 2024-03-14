@@ -50,7 +50,8 @@ const FavoritesPage = () => {
 
           fetchedMovies.push(movieDetails);
         } catch (error) {
-          throw Error(`Error getting the ids ${error}`);
+          console.error(`Failed to fetch data for movie $`);
+          throw Error(`Error fetching the details movie ${error}`);
         }
       }
 

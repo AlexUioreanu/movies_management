@@ -4,7 +4,7 @@ import { ExternalIdType, MovieDetails, Result } from "@/types";
 import { Suspense, useEffect, useState } from "react";
 import React from "react";
 import Image from "next/image";
-import Loading from "./loading";
+import { notFound, useRouter } from "next/navigation";
 
 export default function MovieDetailsWithSuspense({
   params,
@@ -41,12 +41,15 @@ export default function MovieDetailsWithSuspense({
 
   useEffect(() => {
     async function fetchData() {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      const movieDetails = await getMovieById({
-        movieid: params.movieId,
-      });
-      console.log(movieDetails);
-      setMovie(movieDetails);
+      try {
+        const movieDetails = await getMovieById({
+          movieid: params.movieId,
+        });
+        console.log(movieDetails);
+        setMovie(movieDetails);
+      } catch (e) {
+        throw Error(`Error fetching the details movie ${e}`);
+      }
     }
     fetchData();
   }, [params.movieId]);
