@@ -1,37 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import MovieCard from "./MovieCard";
-import { Result } from "@/types";
+import { Result, Root } from "@/types";
 import { useRouter } from "next/navigation";
+import { fetchMultiplePages } from "@/utils";
+import Title from "./Title";
 
-export const SwiperMoviesComponent = ({
+export default async function SwiperMoviesComponent({
   title,
-  movies,
+  fetchMoviesFunction,
   ids = [],
 }: {
   title: string;
-  movies: Result[];
+  fetchMoviesFunction: (page: number) => Promise<Root>;
   ids: number[];
-}) => {
+}) {
   const router = useRouter();
+
+  const [movies, setMovies] = useState<Result[] | undefined>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const results = await fetchMultiplePages({
+        fetchFunction: fetchMoviesFunction,
+        totalPages: 6,
+      });
+      setMovies(results);
+      console.log(results);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
-      <div
-        className="px-10"
-        style={{
-          color: "white",
-          backgroundColor: "red",
-          borderRadius: "20px",
-          border: "5px solid orange",
-          display: "inline-block",
-          textAlign: "center",
-        }}
-      >
-        {title}
-      </div>
+      <Title title={title} />
       <Swiper
         spaceBetween={10}
         slidesPerView={12}
@@ -86,4 +92,4 @@ export const SwiperMoviesComponent = ({
       </Swiper>
     </>
   );
-};
+}

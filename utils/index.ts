@@ -1,4 +1,4 @@
-import { Root, MovieDetails, PopularPeople } from "@/types";
+import { Root, MovieDetails, PopularPeople, Result } from "@/types";
 
 const APIKEY = "96d31308896f028f63b8801331250f03";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -109,6 +109,26 @@ export async function getMoviesByName({
   const data = await response.json();
   console.log(data);
   return data;
+}
+
+export async function fetchMultiplePages({
+  fetchFunction,
+  totalPages,
+}: {
+  fetchFunction: (page: number) => Promise<Root>;
+  totalPages: number;
+}): Promise<Result[]> {
+  let allResults: Result[] = [];
+  for (let page = 1; page <= totalPages; page++) {
+    try {
+      const response = await fetchFunction(page);
+      allResults.push(...response.results);
+    } catch (error) {
+      console.error(`Failed to fetch data for page ${page}:`, error);
+      break;
+    }
+  }
+  return allResults;
 }
 
 export const whiteButtonOutlineStyles = {

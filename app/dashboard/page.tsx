@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import {
   getAiringTvShows,
   getPopularMovies,
@@ -8,25 +8,23 @@ import {
   getTrendingMovies,
   getUpcomingMovies,
 } from "@/utils";
-import { People, PopularPeople, Result, Root } from "@/types";
+import { People, Result } from "@/types";
 import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 import "swiper/css";
 import "swiper/css/pagination";
-import { SwiperMoviesComponent } from "@/app/components/SwiperMoviesComponent";
+import SwiperMoviesComponent from "@/app/components/SwiperMoviesComponent";
 import { SwiperStarsComponent } from "@/app/components/SwiperStarsComponent";
 import SearchComponent from "@/app/components/SearchComponent";
+import Loading from "./loading";
+import Title from "../components/Title";
 
 export default function DashboardPage() {
   const router = useRouter();
 
   const [trendingMovies, setTrendingMovies] = useState<Result[] | undefined>();
-  const [upcomingMovies, setUpcomingMovies] = useState<Result[] | undefined>();
-  const [topRatedMovies, setTopRatedMovies] = useState<Result[] | undefined>();
-  const [popularMovies, setPopularMovies] = useState<Result[] | undefined>();
-  const [airingTvShows, setAiringTvShows] = useState<Result[] | undefined>();
   const [stars, setStars] = useState<People[] | undefined>();
 
   const [favoriteMoviesId, setFavoriteMoviesId] = useState<number[]>([]);
@@ -77,51 +75,11 @@ export default function DashboardPage() {
       console.log(baseStars);
       setStars(baseStars);
     }
-    async function fetchUpcomingMovies() {
-      var baseMovies: Result[] = [];
-      for (let page = 1; page <= totalPages; page++) {
-        const fetchedMovies = await getUpcomingMovies(page);
-        baseMovies.push(...fetchedMovies.results);
-      }
-      console.log(baseMovies);
-      setUpcomingMovies(baseMovies);
-    }
-    async function fetchTopRatedMovies() {
-      var baseMovies: Result[] = [];
-      for (let page = 1; page <= totalPages; page++) {
-        const fetchedMovies = await getTopRatedMovies(page);
-        baseMovies.push(...fetchedMovies.results);
-      }
-      console.log(baseMovies);
-      setTopRatedMovies(baseMovies);
-    }
-    async function fetchPopularMovies() {
-      var baseMovies: Result[] = [];
-      for (let page = 1; page <= totalPages; page++) {
-        const fetchedMovies = await getPopularMovies(page);
-        baseMovies.push(...fetchedMovies.results);
-      }
-      console.log(baseMovies);
-      setPopularMovies(baseMovies);
-    }
-    async function fetchAiringTvShows() {
-      var baseMovies: Result[] = [];
-      for (let page = 1; page <= totalPages; page++) {
-        const fetchedMovies = await getAiringTvShows(page);
-        baseMovies.push(...fetchedMovies.results);
-      }
-      console.log(baseMovies);
-      setAiringTvShows(baseMovies);
-    }
 
     getFavoriteMoviesId();
 
     fetchTrendingMovies();
     fetchStars();
-    fetchUpcomingMovies();
-    fetchTopRatedMovies();
-    fetchPopularMovies();
-    fetchAiringTvShows();
   }, []);
 
   return (
@@ -232,26 +190,29 @@ export default function DashboardPage() {
 
       <SwiperStarsComponent title={"Stars"} stars={stars || []} />
 
-      <SwiperMoviesComponent
-        movies={upcomingMovies || []}
-        title=" Upcoming Movies"
-        ids={favoriteMoviesId}
-      />
-      <SwiperMoviesComponent
-        movies={topRatedMovies || []}
-        title=" Top Rated Movies"
-        ids={favoriteMoviesId}
-      />
-      <SwiperMoviesComponent
-        movies={popularMovies || []}
-        title=" Popular Movies"
-        ids={favoriteMoviesId}
-      />
-      <SwiperMoviesComponent
-        movies={airingTvShows || []}
-        title=" Airing TV Shows"
-        ids={favoriteMoviesId}
-      />
+      <Suspense fallback={<Loading />}>
+        <SwiperMoviesComponent
+          title=" Upcoming Movies"
+          ids={favoriteMoviesId}
+          fetchMoviesFunction={getUpcomingMovies}
+        />
+        <SwiperMoviesComponent
+          title="Top Rated Movies"
+          ids={favoriteMoviesId}
+          fetchMoviesFunction={getTopRatedMovies}
+        />
+        <SwiperMoviesComponent
+          title="Popular Movies"
+          ids={favoriteMoviesId}
+          fetchMoviesFunction={getPopularMovies}
+        />
+        <SwiperMoviesComponent
+          title="Airing TV Shows"
+          ids={favoriteMoviesId}
+          fetchMoviesFunction={getAiringTvShows}
+        />
+      </Suspense>
+
       <SearchComponent
         onFavoriteClick={() => getFavoriteMoviesId()}
         ids={favoriteMoviesId}
