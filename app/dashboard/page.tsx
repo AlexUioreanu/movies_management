@@ -30,27 +30,15 @@ export default function DashboardPage() {
   const [favoriteMoviesId, setFavoriteMoviesId] = useState<number[]>([]);
 
   const getFavoriteMoviesId = async () => {
-    try {
-      const response = await fetch(`/api/auth/favorites`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const response = await fetch(`/api/auth/favorites`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-      if (response.ok) {
-        console.log(response);
-
-        const data = await response.json();
-        console.log(data);
-        setFavoriteMoviesId(data.movieIds);
-        console.log(favoriteMoviesId);
-      } else {
-        throw Error(`Failed to fetch favorite movies IDs`);
-      }
-    } catch (error) {
-      throw Error(`Error fetching favorite movies ID ${error}`);
-    }
+    const data = await response.json();
+    setFavoriteMoviesId(data.movieIds);
   };
 
   useEffect(() => {

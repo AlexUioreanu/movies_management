@@ -29,10 +29,10 @@ const FavoritesPage = () => {
         setFavoriteMoviesId(data.movieIds);
         console.log("Fetched favorite ids successfully");
       } else {
-        throw Error("Error getting the ids");
+        console.error("Error getting the ids");
       }
     } catch (error) {
-      throw Error("Error getting the ids");
+      console.error("Error getting the ids:", error);
     }
   };
 
@@ -96,19 +96,25 @@ const FavoritesPage = () => {
           boxShadow: "0 0 16px 16px rgba(0,0,0,0.3)",
         }}
       >
-        {favoriteMovies?.map((movie: MovieDetails) => (
-          <MovieCard
-            key={movie.id}
-            movie={movie as unknown as Result}
-            isMustWatch={movie.vote_average >= 7 ? true : false}
-            isFavorite={favoriteMoviesId.includes(movie.id)}
-            onFavoriteClick={() => fetchFavoriteIds()}
-            onClick={() => {
-              const isFavorite = favoriteMoviesId.includes(movie.id);
-              router.push(`/dashboard/${movie.id}?isFavorite=${isFavorite}`);
-            }}
-          />
-        ))}
+        {favoriteMovies.length > 0 ? (
+          favoriteMovies.map((movie: MovieDetails) => (
+            <MovieCard
+              key={movie.id}
+              movie={movie as unknown as Result}
+              isMustWatch={movie.vote_average >= 7 ? true : false}
+              isFavorite={favoriteMoviesId.includes(movie.id)}
+              onFavoriteClick={() => fetchFavoriteIds()}
+              onClick={() => {
+                const isFavorite = favoriteMoviesId.includes(movie.id);
+                router.push(`/dashboard/${movie.id}?isFavorite=${isFavorite}`);
+              }}
+            />
+          ))
+        ) : (
+          <div style={{ textAlign: "center" }}>
+            <p>You don't have any favorite movies yet.</p>
+          </div>
+        )}
       </div>
     </div>
   );
