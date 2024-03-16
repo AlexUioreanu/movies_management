@@ -6,18 +6,6 @@ import React from "react";
 import Image from "next/image";
 import Loading from "./loading";
 
-async function fetchData(params: any) {
-  try {
-    const movieDetails = await getMovieById({
-      movieid: params.movieId,
-    });
-    console.log(movieDetails);
-    return movieDetails;
-  } catch (e) {
-    throw Error(`Error fetching the details movie ${e}`);
-  }
-}
-
 export default async function MovieDetailsWithSuspense({
   params,
   searchParams,
@@ -27,7 +15,21 @@ export default async function MovieDetailsWithSuspense({
     searchParams.isFavorite === "true"
   );
 
-  setMovie(await fetchData(params));
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const movieDetails = await getMovieById({
+          movieid: params.movieId,
+        });
+        console.log(movieDetails);
+        setMovie(movieDetails);
+      } catch (e) {
+        throw Error(`Error fetching the details movie ${e}`);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleFavoriteClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
