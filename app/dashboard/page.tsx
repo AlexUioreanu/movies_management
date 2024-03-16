@@ -77,7 +77,6 @@ export default function DashboardPage() {
         backgroundImage: "url('/backgrounddoodleextended.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        padding: "1rem",
         textAlign: "center",
       }}
     >
