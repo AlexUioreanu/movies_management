@@ -80,7 +80,6 @@ export default function Form() {
         <OutlinedTextField
           name="email"
           label="Email"
-          type="email"
           onChange={handleChange}
           value={inputs.email}
           required
